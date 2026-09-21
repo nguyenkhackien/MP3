@@ -1,0 +1,55 @@
+# =========================
+# Android / Gradle
+# =========================
+.gradle/
+build/
+**/build/
+
+# Local configuration
+local.properties
+
+# =========================
+# Android Studio / IntelliJ
+# =========================
+.idea/
+*.iml
+
+# =========================
+# Native build
+# =========================
+.externalNativeBuild/
+.cxx/
+
+# =========================
+# Android generated files
+# =========================
+captures/
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# =========================
+# Kotlin
+# =========================
+.kotlin/
+
+# =========================
+# Signing / Secrets
+# =========================
+*.jks
+*.keystore
+
+# Nếu project có file chứa signing credentials
+keystore.properties
+
+# =========================
+# macOS
+# =========================
+.DS_Store
+
+# =========================
+# Logs / temporary files
+# =========================
+*.log
+*.tmp
