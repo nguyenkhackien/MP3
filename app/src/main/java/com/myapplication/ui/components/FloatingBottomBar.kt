@@ -5,8 +5,8 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,22 +19,22 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.currentBackStackEntryAsState
-import com.myapplication.model.BottomNavItem
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.tooling.preview.Preview
+import com.myapplication.ui.theme.MyApplicationTheme
+import com.myapplication.navigation.BottomNavItem
 import com.myapplication.ui.theme.PrimaryLinearColor
 
 @Composable
 fun FloatingBottomBar(
-    navController: NavController,
+    selectedRoute: String?,
     items: List<BottomNavItem>,
+    onItemClick: (BottomNavItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
+    if (items.isEmpty()) return
 
-    val selectedIndex = items.indexOfFirst { it.route == currentRoute }.coerceAtLeast(0)
+    val selectedIndex = items.indexOfFirst { it.route == selectedRoute }.coerceAtLeast(0)
 
     val animatedIndex by animateFloatAsState(
         targetValue = selectedIndex.toFloat(),
@@ -48,9 +48,8 @@ fun FloatingBottomBar(
     Box(
         modifier = modifier
             .padding(vertical = 16.dp)
-            .height(54.dp)
+            .height(60.dp)
             .width(224.dp)
-            .fillMaxWidth()
             .border(
                 width = 1.dp,
                 brush = Brush.verticalGradient(
@@ -82,29 +81,22 @@ fun FloatingBottomBar(
         }
 
         Row(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().selectableGroup(),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            items.forEachIndexed { index, item ->
-                val isSelected = currentRoute == item.route
+            items.forEach { item ->
+                val isSelected = selectedRoute == item.route
 
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxHeight()
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null
-                        ) {
-                            if (!isSelected) {
-                                navController.navigate(item.route) {
-                                    popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                            }
-                        },
+                        .selectable(
+                            selected = isSelected,
+                            role = Role.Tab,
+                            onClick = { onItemClick(item) }
+                        ),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
@@ -116,5 +108,17 @@ fun FloatingBottomBar(
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun FloatingBottomBarPreview() {
+    MyApplicationTheme {
+        FloatingBottomBar(
+            selectedRoute = BottomNavItem.Home.route,
+            items = listOf(BottomNavItem.Home, BottomNavItem.Library, BottomNavItem.Profile),
+            onItemClick = {}
+        )
     }
 }

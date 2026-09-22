@@ -1,4 +1,4 @@
-package com.myapplication.model
+package com.myapplication.navigation
 
 import androidx.annotation.DrawableRes
 import com.myapplication.R

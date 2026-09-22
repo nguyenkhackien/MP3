@@ -24,3 +24,11 @@ val UnselectedBackgroundColor = Brush.linearGradient(
         Color.Transparent
     )
 )
+
+val HomeLinearColor = Brush.linearGradient(
+    colors = listOf(
+        Color(0xFF180728),
+        Color(0xFF0E0E10),
+        Color(0xFF0E0E10)
+    ),
+)
