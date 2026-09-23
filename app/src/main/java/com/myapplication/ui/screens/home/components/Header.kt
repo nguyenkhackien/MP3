@@ -1,8 +1,6 @@
 package com.myapplication.ui.screens.home.components
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.shape.CircleShape
 import com.myapplication.ui.components.BaseButton
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,7 +20,11 @@ import com.myapplication.R
 import com.myapplication.ui.theme.MyApplicationTheme
 
 @Composable
-fun Header(onSearchClick: () -> Unit = {}) {
+fun Header(
+    searchText: String,
+    onSearchTextChanged: (String) -> Unit,
+    onSearchClick: () -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -56,6 +58,6 @@ fun Header(onSearchClick: () -> Unit = {}) {
 @Composable
 private fun HeaderPreview() {
     MyApplicationTheme {
-        Header()
+        Header("",{},{})
     }
 }
