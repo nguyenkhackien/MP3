@@ -29,9 +29,7 @@ fun Header(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                start = 20.dp,
                 top = 8.dp,
-                end = 20.dp,
                 bottom = 12.dp
             ),
         horizontalArrangement = Arrangement.SpaceBetween,

@@ -24,7 +24,7 @@ fun MusicTypeList(
 
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp)
+        contentPadding = PaddingValues( vertical = 8.dp)
     ) {
         items(items) { item ->
             val isSelected = item == selectedItem

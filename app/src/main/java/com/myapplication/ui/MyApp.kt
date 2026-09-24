@@ -16,6 +16,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.rememberGraphicsLayer
+import com.myapplication.ui.modifiers.GlassBackdrop
+import com.myapplication.ui.modifiers.glassSource
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -29,6 +33,8 @@ import com.myapplication.ui.components.FloatingBottomBar
 @Composable
 fun MyApp() {
     val navController = rememberNavController()
+    val backdropLayer = rememberGraphicsLayer()
+    val backdrop = remember(backdropLayer) { GlassBackdrop(backdropLayer) }
     val backStackEntry by navController.currentBackStackEntryAsState()
     val selectedRoute = backStackEntry?.destination?.route
     val items = listOf(BottomNavItem.Home, BottomNavItem.Library, BottomNavItem.Profile)
@@ -48,6 +54,7 @@ fun MyApp() {
                     contentAlignment = Alignment.Center
                 ) {
                     FloatingBottomBar(
+                        backdrop = backdrop,
                         selectedRoute = selectedRoute,
                         items = items,
                         onItemClick = { item ->
@@ -68,7 +75,7 @@ fun MyApp() {
             CompositionLocalProvider(LocalScreenPadding provides innerPadding) {
                 AppNavigation(
                     navController = navController,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize().glassSource(backdrop)
                 )
             }
         }

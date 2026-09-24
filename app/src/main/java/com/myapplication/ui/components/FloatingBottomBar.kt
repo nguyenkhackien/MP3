@@ -24,13 +24,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.myapplication.ui.theme.MyApplicationTheme
 import com.myapplication.navigation.BottomNavItem
 import com.myapplication.ui.theme.PrimaryLinearColor
+import com.myapplication.ui.modifiers.GlassBackdrop
+import com.myapplication.ui.modifiers.glassBackdrop
 
 @Composable
 fun FloatingBottomBar(
     selectedRoute: String?,
     items: List<BottomNavItem>,
     onItemClick: (BottomNavItem) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    backdrop: GlassBackdrop? = null
 ) {
     if (items.isEmpty()) return
 
@@ -61,50 +64,51 @@ fun FloatingBottomBar(
                 shape = RoundedCornerShape(32.dp)
             )
             .clip(RoundedCornerShape(32.dp))
-            .background(Color(0xFF1E1E24).copy(alpha = 0.5f))
-            .padding(6.dp)
     ) {
-        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-            val tabWidth = maxWidth / items.size
-            val indicatorOffset = tabWidth * animatedIndex
-            Box(
-                modifier = Modifier
-                    .offset(x = indicatorOffset)
-                    .width(tabWidth)
-                    .fillMaxHeight()
-                    .padding(2.dp)
-                    .background(
-                        brush = PrimaryLinearColor,
-                        shape = CircleShape
-                    )
-            )
-        }
-
-        Row(
-            modifier = Modifier.fillMaxSize().selectableGroup(),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            items.forEach { item ->
-                val isSelected = selectedRoute == item.route
-
+        Box(Modifier.matchParentSize().glassBackdrop(backdrop))
+        Box(Modifier.fillMaxSize().padding(6.dp)) {
+            BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+                val tabWidth = maxWidth / items.size
+                val indicatorOffset = tabWidth * animatedIndex
                 Box(
                     modifier = Modifier
-                        .weight(1f)
+                        .offset(x = indicatorOffset)
+                        .width(tabWidth)
                         .fillMaxHeight()
-                        .selectable(
-                            selected = isSelected,
-                            role = Role.Tab,
-                            onClick = { onItemClick(item) }
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        painter = painterResource(id = item.iconRes),
-                        contentDescription = item.title,
-                        tint = if (isSelected) Color.White else Color.White.copy(alpha = 0.6f),
-                        modifier = Modifier.size(24.dp)
-                    )
+                        .padding(2.dp)
+                        .background(
+                            brush = PrimaryLinearColor,
+                            shape = CircleShape
+                        )
+                )
+            }
+
+            Row(
+                modifier = Modifier.fillMaxSize().selectableGroup(),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                items.forEach { item ->
+                    val isSelected = selectedRoute == item.route
+
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .selectable(
+                                selected = isSelected,
+                                role = Role.Tab,
+                                onClick = { onItemClick(item) }
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(id = item.iconRes),
+                            contentDescription = item.title,
+                            tint = if (isSelected) Color.White else Color.White.copy(alpha = 0.6f),
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
                 }
             }
         }

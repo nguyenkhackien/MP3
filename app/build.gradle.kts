@@ -60,4 +60,7 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     // Import the navigation-compose library from your TOML catalog
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+
 }
