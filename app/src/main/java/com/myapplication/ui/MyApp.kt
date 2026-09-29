@@ -39,9 +39,10 @@ fun MyApp() {
     val selectedRoute = backStackEntry?.destination?.route
     val items = listOf(BottomNavItem.Home, BottomNavItem.Library, BottomNavItem.Profile)
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
+            containerColor = Color.Transparent,
             bottomBar = {
                 Box(
                     modifier = Modifier

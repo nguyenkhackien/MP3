@@ -85,6 +85,36 @@ class HomeViewModel @Inject constructor() : ViewModel() {
                     audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
                     album = "Cộng Cà Phê Sessions",
                     imageUrl = "https://picsum.photos/seed/vi-anh-dau-biet/300/300"
+                ),
+                Music(
+                    title = "Tháng Tư Là Lời Nói Dối Của Em",
+                    desc = "Bài hát nhẹ nhàng về những hoài niệm mùa xuân.",
+                    musician = "Hà Anh Tuấn",
+                    author = "Phạm Toàn Thắng",
+                    duration = 270000L,
+                    audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+                    album = "Fragile",
+                    imageUrl = "https://picsum.photos/seed/thang-tu/300/300"
+                ),
+                Music(
+                    title = "Có Chắc Yêu Là Đây",
+                    desc = "Bài hát R&B/Pop sôi động, tươi trẻ.",
+                    musician = "Sơn Tùng M-TP",
+                    author = "Sơn Tùng M-TP",
+                    duration = 202000L,
+                    audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+                    album = "Single 2020",
+                    imageUrl = "https://picsum.photos/seed/co-chac-yeu-la-day/300/300"
+                ),
+                Music(
+                    title = "Vì Anh Đâu Biết",
+                    desc = "Bản Indie Pop nhẹ nhàng ngập tràn cảm xúc.",
+                    musician = "Madihu ft. Vũ",
+                    author = "Madihu",
+                    duration = 218000L,
+                    audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+                    album = "Cộng Cà Phê Sessions",
+                    imageUrl = "https://picsum.photos/seed/vi-anh-dau-biet/300/300"
                 )
             )),
     )

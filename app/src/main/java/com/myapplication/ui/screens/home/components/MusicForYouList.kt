@@ -39,7 +39,7 @@ import com.myapplication.ui.theme.MyApplicationTheme
 import com.myapplication.ui.theme.PrimaryLinearColor
 
 @Composable
-fun MusicItem(
+fun MusicCard(
     item: Music,
     onClick: (Music) -> Unit
 ){
@@ -110,11 +110,10 @@ fun MusicForYouList(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             items(items) { item ->
-                MusicItem(item,onClick)
+                MusicCard(item,onClick)
             }
         }
     }
-
 }
 
 @Preview

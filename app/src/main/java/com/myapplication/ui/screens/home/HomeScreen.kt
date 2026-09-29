@@ -21,6 +21,7 @@ import com.myapplication.ui.components.LocalScreenPadding
 import com.myapplication.ui.screens.home.components.Header
 import com.myapplication.ui.screens.home.components.MusicForYouList
 import com.myapplication.ui.screens.home.components.MusicTypeList
+import com.myapplication.ui.screens.home.components.Trending
 import com.myapplication.ui.theme.HomeLinearColor
 import com.myapplication.ui.theme.MyApplicationTheme
 
@@ -44,8 +45,7 @@ private fun HomeContent(
     uiState: HomeUiState,
     onEvent: (HomeUiEvent)-> Unit
 ) {
-    val bottomPadding = LocalScreenPadding.current?.calculateBottomPadding()
-        ?: WindowInsets.safeDrawing.asPaddingValues().calculateBottomPadding()
+    val bottomPadding = WindowInsets.safeDrawing.asPaddingValues().calculateBottomPadding()
     Screen(
         modifier = modifier.background(brush = HomeLinearColor),
         safeBottom = false
@@ -53,9 +53,8 @@ private fun HomeContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp)
-                .padding(bottom = bottomPadding)
+                .padding(bottom=bottomPadding)
         ) {
             Header(
                 searchText = uiState.searchText,
@@ -72,6 +71,12 @@ private fun HomeContent(
                 onClick = { type -> onEvent(HomeUiEvent.MusicListEvent.OnMusicTypeSelected(type)) }
             )
             MusicForYouList(
+                items = uiState.myMusicList,
+                onClick = { music ->
+                    onEvent(HomeUiEvent.OnSelectMusic(music))
+                }
+            )
+            Trending(
                 items = uiState.myMusicList,
                 onClick = { music ->
                     onEvent(HomeUiEvent.OnSelectMusic(music))
