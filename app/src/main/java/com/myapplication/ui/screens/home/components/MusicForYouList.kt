@@ -44,6 +44,7 @@ fun MusicCard(
     onClick: (Music) -> Unit
 ){
     Card(
+        onClick = { onClick(item) },
         modifier = Modifier.width(140.dp),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent),
         shape = RectangleShape

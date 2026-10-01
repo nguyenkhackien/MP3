@@ -72,9 +72,7 @@ private fun HomeContent(
             )
             MusicForYouList(
                 items = uiState.myMusicList,
-                onClick = { music ->
-                    onEvent(HomeUiEvent.OnSelectMusic(music))
-                }
+                onClick = { onEvent(HomeUiEvent.OnForYouItemClick) }
             )
             Trending(
                 items = uiState.myMusicList,

@@ -1,12 +1,16 @@
 package com.myapplication.ui.screens.home
 
+import com.myapplication.navigation.AppRoute
+import com.myapplication.navigation.AppNavigator
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.myapplication.model.Music
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class HomeUiState(
@@ -27,11 +31,15 @@ sealed interface HomeUiEvent {
         data class OnMusicTypeSelected(val type: String) : MusicListEvent
     }
 
+    data object OnForYouItemClick : HomeUiEvent
+
     data class OnSelectMusic(val music: Music) : HomeUiEvent
 }
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val navigator: AppNavigator
+) : ViewModel() {
     private val _uiState = MutableStateFlow(
         HomeUiState(
             itemList = listOf("All", "Chill", "Workout", "Focus", "Other"),
@@ -126,6 +134,11 @@ class HomeViewModel @Inject constructor() : ViewModel() {
             is HomeUiEvent.HeaderEvent -> handleHeaderEvent(event)
             is HomeUiEvent.MusicListEvent -> handleMusicListEvent(event)
             is HomeUiEvent.OnSelectMusic -> handleSelectMusic(event)
+            HomeUiEvent.OnForYouItemClick -> {
+                viewModelScope.launch {
+                    navigator.navigateTo(AppRoute.Blank, singleTop = true)
+                }
+            }
         }
     }
 

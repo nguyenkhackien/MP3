@@ -23,7 +23,8 @@ internal val LocalScreenPadding = compositionLocalOf<PaddingValues?> { null }
  * Khung gốc của mỗi màn. Mặc định tránh system bars và các thanh của Scaffold.
  * Left/Right là cạnh vật lý, không đổi ý nghĩa khi ngôn ngữ chuyển sang RTL.
  * Tắt một cạnh cho phép nội dung vẽ phía dưới vùng được bảo vệ ở cạnh đó;
- * không ẩn system bar hay bottom bar.
+ * không ẩn system bar hay bottom bar. Insets được consume cả khi bỏ padding,
+ * để các component con không tự thêm lại safe area cho cạnh đã chọn vẽ tràn.
  */
 @Composable
 fun Screen(
@@ -40,13 +41,12 @@ fun Screen(
     val top = if (safeTop) padding.calculateTopPadding() else 0.dp
     val right = if (safeRight) padding.calculateRightPadding(layoutDirection) else 0.dp
     val bottom = if (safeBottom) padding.calculateBottomPadding() else 0.dp
-    val appliedPadding = PaddingValues.Absolute(left, top, right, bottom)
 
     Box(
         modifier = modifier
             .fillMaxSize()
             .absolutePadding(left = left, top = top, right = right, bottom = bottom)
-            .consumeWindowInsets(appliedPadding),
+            .consumeWindowInsets(padding),
         content = content
     )
 }
